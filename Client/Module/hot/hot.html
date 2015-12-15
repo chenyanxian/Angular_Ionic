@@ -1,6 +1,23 @@
 
 
+<ion-header-bar align-title="center" class="bar-positive">
+    <!--<div class="buttons">-->
+        <!--<button class="button">删除</button>-->
+    <!--</div>-->
+    <h1 class="title">热门列表</h1>
+        <div class="buttons">
+    <button class="button">只看我的</button>
+    </div>
+</ion-header-bar>
 
-<div style="border:1px solid red;width: 100px;height: 100px;margin-top: 100px;">
-    hot
-</div>
+
+<ion-content>
+    <ion-list>
+        <ion-item ng-repeat="item in hotItems" class="item-remove-animate">
+            {{item.name}}  &&  {{item._id}}
+            <ion-option-button class="button-assertive" ng-click="delItem(item);">
+                Delete
+            </ion-option-button>
+        </ion-item>
+    </ion-list>
+</ion-content>

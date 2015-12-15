@@ -4,9 +4,9 @@
 'use strict';
 
 angular.module('ionicApp',['ionic'])
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         $urlRouterProvider.otherwise('/tab/active');
 
-        //$locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(true);
 
     });

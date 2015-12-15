@@ -1,0 +1,35 @@
+
+
+
+    <!--<div class="list">-->
+        <!--<label class="item item-input">-->
+            <!--<input type="text" placeholder="Login Name" />-->
+        <!--</label>-->
+
+        <!--<label class="item item-input" style="border-bottom:1px solid #ddd">-->
+            <!--<input type="text" placeholder="Login Password" />-->
+        <!--</label>-->
+
+        <!--<div style="text-align:center;">-->
+            <!--<button class="button button-outline button-positive">登录</button>-->
+            <!--<button class="button button-outline button-positive">注册</button>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+    <div class="list">
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Login Name</span>
+            <input type="text" placeholder="Login Name" ng-model="userName" />
+        </label>
+
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Login Password</span>
+            <input type="text" placeholder="Login Password" ng-model="userPwd" />
+        </label>
+
+        <div style="text-align:center;margin-top:5px;">
+            <button class="button button-outline button-positive" ng-click="doLogin()">登录</button>
+            <button class="button button-outline button-positive">注册</button>
+        </div>
+    </div>

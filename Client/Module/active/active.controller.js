@@ -7,4 +7,8 @@
 angular.module('ionicApp')
     .controller('activeController', function ($scope,$stateParams,$state,$http,$rootScope) {
 
+        $http.get("/api/users/getuser").success(function(d){
+
+        })
+
     })

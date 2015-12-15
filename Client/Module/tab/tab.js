@@ -8,14 +8,14 @@ angular.module('ionicApp').config(function ($stateProvider) {
     $stateProvider
         .state('tab', {
             url: '/tab',
-            templateUrl: 'Angular_ionic/Client/Module/tab/tab.html',
+            templateUrl: 'Module/tab/tab.html',
             controller:"tabController"
         })
         .state("tab.active",{
             url:'/active',
             views:{
                 "tab-active":{
-                    templateUrl:"Angular_ionic/Client/Module/active/active.html",
+                    templateUrl:"Module/active/active.html",
                     controller:"activeController"
                 }
             }
@@ -24,7 +24,7 @@ angular.module('ionicApp').config(function ($stateProvider) {
             url:'/hot',
             views:{
                 "tab-hot":{
-                    templateUrl:"Angular_ionic/Client/Module/hot/hot.html",
+                    templateUrl:"Module/hot/hot.html",
                     controller:"hotController"
                 }
             }
@@ -33,7 +33,7 @@ angular.module('ionicApp').config(function ($stateProvider) {
             url:'/account',
             views:{
                 "tab-account":{
-                    templateUrl:"Angular_ionic/Client/Module/account/account.html",
+                    templateUrl:"Module/account/account.html",
                     controller:"accountController"
                 }
             }
