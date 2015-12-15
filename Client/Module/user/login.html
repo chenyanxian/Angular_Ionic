@@ -16,20 +16,43 @@
         <!--</div>-->
     <!--</div>-->
 
-
     <div class="list">
-        <label class="item item-input item-stacked-label">
-            <span class="input-label">Login Name</span>
-            <input type="text" placeholder="Login Name" ng-model="userName" />
-        </label>
+        <div ng-show="showLogin">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Login Name</span>
+                <input type="text" placeholder="Login Name" ng-model="loginName" />
+            </label>
 
-        <label class="item item-input item-stacked-label">
-            <span class="input-label">Login Password</span>
-            <input type="password" placeholder="Login Password" ng-model="userPwd" />
-        </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Login Password</span>
+                <input type="password" placeholder="Login Password" ng-model="loginPwd" />
+            </label>
 
-        <div style="text-align:center;margin-top:5px;">
-            <button class="button button-outline button-positive" ng-click="doLogin()">登录</button>
-            <button class="button button-outline button-positive">注册</button>
+            <div style="text-align:center;margin-top:5px;">
+                <button class="button button-outline button-positive" ng-click="doLogin()">登录</button>
+                <a class="" ng-click="goRegister()">注册</a>
+            </div>
+        </div>
+
+        <div ng-show="showRegister">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Login Name</span>
+                <input type="text" placeholder="Login Name" ng-model="regName" />
+            </label>
+
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Login Password</span>
+                <input type="password" placeholder="Login Password" ng-model="regPwd" />
+            </label>
+
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Login NickName</span>
+                <input type="password" placeholder="Login Password" ng-model="regNiceName" />
+            </label>
+
+            <div style="text-align:center;margin-top:5px;">
+                <a class="" ng-click="goLogin()">去登录</a>
+                <button class="button button-outline button-positive" ng-click="doRegister()">注册</button>
+            </div>
         </div>
     </div>

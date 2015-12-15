@@ -12,9 +12,4 @@ angular.module('ionicApp').config(function ($stateProvider) {
             templateUrl: 'Module/user/login.html',
             controller:"loginController"
         })
-        .state('register',{
-            url: '/register',
-            templateUrl: 'Module/user/register.html',
-            controller:"registerController"
-        })
 });

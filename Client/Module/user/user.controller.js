@@ -6,19 +6,23 @@
 angular.module('ionicApp')
     .controller('loginController', function ($scope,$stateParams,$state,$http,userTool,$ionicPopup) {
 
+        $scope.showLogin = true;
+        $scope.showRegister = false;
+
         var fromState = "";
         if($stateParams.entity){
             fromState = $stateParams.entity;
+            $scope.showLogin = true;
         }else{
             fromState="tab.hot";
         }
 
-        $scope.userName = "";
-        $scope.userPwd = "";
+        $scope.loginName = "";
+        $scope.loginPwd = "";
 
         $scope.doLogin = function(){
-            var name = $scope.userName;
-            var pwd = $scope.userPwd;
+            var name = $scope.loginName;
+            var pwd = $scope.loginPwd;
 
             if(!name || !pwd){
                 var confirmPopup = $ionicPopup.alert({
@@ -39,9 +43,19 @@ angular.module('ionicApp')
                 })
             }
         }
+
+        $scope.doRegister = function(){
+
+        }
+
+        $scope.goRegister = function(){
+            $scope.showLogin = false;
+            $scope.showRegister = true;
+        }
+
+
+        $scope.goLogin = function(){
+            $scope.showLogin = true;
+            $scope.showRegister = false;
+        }
     });
-
-angular.module('ionicApp')
-    .controller('registerController',function($scope,$stateParams,$state,$http,userTool,$ionicPopup){
-
-    })
