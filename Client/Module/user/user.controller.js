@@ -4,7 +4,14 @@
 'use strict';
 
 angular.module('ionicApp')
-    .controller('userController', function ($scope,$stateParams,$state,$http,$rootScope,userTool,$ionicPopup) {
+    .controller('loginController', function ($scope,$stateParams,$state,$http,userTool,$ionicPopup) {
+
+        var fromState = "";
+        if($stateParams.entity){
+            fromState = $stateParams.entity;
+        }else{
+            fromState="tab.hot";
+        }
 
         $scope.userName = "";
         $scope.userPwd = "";
@@ -22,12 +29,19 @@ angular.module('ionicApp')
                 confirmPopup.then(function(res){});
             }
             else{
-                $http.post("").success(function(data){
-                  if(data.rc == "0"){
-                      userTool.setUser(data.data.user);
-                      $state.go("");
+                $http.post("/api/users/login",{name:name,pwd:pwd}).success(function(data){
+                  if(data.rc){
+                      //写入user tool
+                      userTool.setUser(data.data);
+
+                      $state.go(fromState);
                   }
                 })
             }
         }
+    });
+
+angular.module('ionicApp')
+    .controller('registerController',function($scope,$stateParams,$state,$http,userTool,$ionicPopup){
+
     })

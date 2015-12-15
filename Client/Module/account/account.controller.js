@@ -11,6 +11,6 @@ angular.module('ionicApp')
         var bl = userTool.checkUserExist();
 
         if(!bl){
-            $state.go("login");
+            $state.go("login",{entity:"tab.account"});
         }
     })

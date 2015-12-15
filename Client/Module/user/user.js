@@ -8,7 +8,13 @@ angular.module('ionicApp').config(function ($stateProvider) {
     $stateProvider
         .state('login', {
             url: '/login',
-            templateUrl: 'Angular_ionic/Client/Module/user/user.html',
-            controller:"userController"
+            params:{entity:null},
+            templateUrl: 'Module/user/login.html',
+            controller:"loginController"
+        })
+        .state('register',{
+            url: '/register',
+            templateUrl: 'Module/user/register.html',
+            controller:"registerController"
         })
 });

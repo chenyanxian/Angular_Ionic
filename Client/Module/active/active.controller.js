@@ -5,10 +5,9 @@
 'use strict';
 
 angular.module('ionicApp')
-    .controller('activeController', function ($scope,$stateParams,$state,$http,$rootScope) {
+    .controller('activeController', function ($scope,$stateParams,$state,$http,userTool) {
 
-        $http.get("/api/users/getuser").success(function(d){
 
-        })
+        var user = userTool.getUser();
 
     })

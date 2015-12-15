@@ -6,18 +6,23 @@
 angular.module("ionicApp").service("userTool",function(){
     var usertool = function(){
 
-        this.userName = "";
+        this.user = {name:"",nickname:""};
 
-        this.setUser = function(uid){
-            this.userName = uid;
+        this.setUser = function(user){
+            this.user.name = user.name;
+            this.user.nickname = user.nickname;
+        }
+
+        this.getUser = function(){
+            return this.user;
         }
 
         this.removeUser = function(uid){
-            this.userName = "";
+            this.user = {name:"",nickname:""};
         }
 
         this.checkUserExist = function(){
-            if(this.userName != ""){
+            if(this.user.name != ""){
                 return true;
             }
             else{

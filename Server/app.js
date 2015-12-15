@@ -5,10 +5,10 @@
 //var fs 				= require('fs');
 //var urlencode 		= require('urlencode');
 //var cookieParser 	= require('cookie-parser');
-//var bodyParser 		= require('body-parser');
+
 //var expressSession 	= require('express-session');
 
-
+var bodyParser 		= require('body-parser');
 var path 			= require('path');
 var express 		= require('express');
 var mongoose		= require('mongoose');
@@ -22,6 +22,11 @@ var env 	= process.env.NODE_ENV || 'development';
 
 //setup server
 var app 	= express();
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+
 var server = require('http').createServer(app);
 
 
@@ -32,7 +37,6 @@ app.use(express.static(path.join(__dirname,'../Client')));
 require('./routes')(app);
 
 app.get('*',function(req,res){
-    console.log(req.originalUrl);
     res.redirect('/#' + req.originalUrl);
 })
 
