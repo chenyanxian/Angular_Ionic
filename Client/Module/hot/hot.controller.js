@@ -17,4 +17,6 @@ angular.module('ionicApp')
 
         var user = userTool.getUser();
 
+
+        console.log(user);
     })
