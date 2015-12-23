@@ -9,10 +9,8 @@ angular.module('ionicApp')
 
         $scope.hotItems = [];
 
-        $http.get("/api/users/getuser").success(function(d){
-            if(d.rc){
-                $scope.hotItems = d.data;
-            }
+        $http.get("/api/article/getAllArticles/").success(function(d){
+
         })
 
         var user = userTool.getUser();

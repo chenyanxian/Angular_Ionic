@@ -5,4 +5,5 @@
 module.exports = function(app) {
     //设置路由
     app.use('/api/users',require('./api/users'));
+    app.use('/api/article',require('./api/article'));
 }
