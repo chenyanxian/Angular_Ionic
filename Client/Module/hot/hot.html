@@ -14,7 +14,19 @@
 <ion-content>
     <ion-list>
         <ion-item ng-repeat="item in hotItems" class="item-remove-animate">
-            {{item.name}}  &&  {{item._id}}
+            <div>
+                <span style="float: left;font-weight: bold">{{item.title}}</span>
+                <span style="float: right">{{item.category}}</span>
+                <div style="clear: both"></div>
+            </div>
+
+            <div style="font-size: 80%">
+                <span style="float: left">{{item.creater}}</span>
+                <span style="float: right">{{item.createTime}}</span>
+                <div style="clear: both"></div>
+            </div>
+
+
             <ion-option-button class="button-assertive" ng-click="delItem(item);">
                 Delete
             </ion-option-button>

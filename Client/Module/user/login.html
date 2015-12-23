@@ -27,12 +27,12 @@
                 <span class="input-label">Login Password</span>
                 <input type="password" placeholder="Login Password" ng-model="loginPwd" />
             </label>
-
-            <div style="text-align:center;margin-top:5px;">
-                <button class="button button-outline button-positive" ng-click="doLogin()">登录</button>
-                <a class="" ng-click="goRegister()">注册</a>
+            <div style="text-align:center;margin-top:10px;">
+                <button class="button button-positive button-full" ng-click="doLogin()">登录</button>
+                <button class="button button-clear button-outline button-full" ng-click="goRegister()">去注册</button>
             </div>
-        </div>
+
+    </div>
 
         <div ng-show="showRegister">
             <label class="item item-input item-stacked-label">
@@ -50,9 +50,9 @@
                 <input type="text" placeholder="Login Password" ng-model="regNiceName" />
             </label>
 
-            <div style="text-align:center;margin-top:5px;">
-                <a class="" ng-click="goLogin()">去登录</a>
-                <button class="button button-outline button-positive" ng-click="doRegister()">注册</button>
+            <div style="text-align:center;margin-top:10px;">
+                <button class="button button-positive button-full" ng-click="doRegister()">注册</button>
+                <a class="button button-clear button-outline button-full" ng-click="goLogin()">去登录</a>
             </div>
         </div>
     </div>
