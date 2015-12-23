@@ -7,7 +7,6 @@ var User = require('./userModel');
 var Q = require("q");
 
 exports.login = function(req,res){
-    var defer = Q.defer();
     var name = req.body.name;
     var pwd = req.body.pwd;
 
@@ -46,11 +45,9 @@ exports.register = function(req,res){
 }
 
 exports.getUser = function(req,res){
-    var defer = Q.defer();
-
     User.find({},function(err,users){
         if(err){
-            return res.status(500).json({rc:false,data:"服务器异常!"});
+            return res.status(500).json({rc:false,data:err});
         }
         else{
             return res.status(200).json({rc:true,data:users});

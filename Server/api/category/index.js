@@ -10,7 +10,7 @@ var router = express.Router();
 
 router.post("/add",controller.add);
 router.post("/edit/:id",controller.edit);
-router.get("/delete/:id",controller.delete);
+router.post("/delete/:id",controller.delete);
 router.get("/getAll",controller.getAll);
 
 module.exports = router;
