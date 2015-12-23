@@ -20,18 +20,17 @@ function getItemById(name){
 
 exports.add = function(req,res){
     var name = req.body.name;
-
     var category = new Category({name:name});
 
     var promise = getItemById(name);
     promise.then(function(result){
         if(result.rc == false){
-            return res.status(500).json(result.data);
+            return res.status(200).json(result.data);
         }else{
-            if(d.result.length == 0){
+            if(result.data.length == 0){
                 category.save(function(cateerr,cate){
                     if(cateerr){
-                        return res.status(500).json({rc:false,data:cateerr});
+                        return res.status(200).json({rc:false,data:cateerr});
                     } else{
                         return res.status(200).json({rc:true,data:cate});
                     }
@@ -45,14 +44,11 @@ exports.add = function(req,res){
 
 exports.edit = function(req,res){
     var id = req.body.id;
-    var name = req.body.name;
+    var name = req.body.name
 
-    var category = new Category();
-    category.name = name;
-
-    Category.findByIdAndUpdate(id,category,function(err,cate){
+    Category.findByIdAndUpdate({_id:id},{name:name},function(err,cate){
         if(err){
-            return res.status(500).json(err);
+            return res.status(200).json({rc:false,data:err});
         }else{
             return res.status(200).json({rc:true,data:cate});
         }
@@ -60,10 +56,11 @@ exports.edit = function(req,res){
 }
 
 exports.delete = function(req,res){
-    var id = req.body.id;
+    var id = req.params.id;
+    console.log(id);
     Category.remove({_id:id},function(err){
         if(err){
-            return res.status(500).json({rc:false,data: err});
+            return res.status(200).json({rc:false,data: err});
         } else{
             return res.status(200).json({rc:true,data: "删除成功!"});
         }
@@ -73,7 +70,7 @@ exports.delete = function(req,res){
 exports.getAll = function(req,res){
     Category.find({},function(err,users){
         if(err){
-            return res.status(500).json({rc:false,data:err});
+            return res.status(200).json({rc:false,data:err});
         }
         else{
             return res.status(200).json({rc:true,data:users});

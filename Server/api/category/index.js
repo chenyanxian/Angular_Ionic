@@ -9,7 +9,7 @@ var controller = require('./category.controller');
 var router = express.Router();
 
 router.post("/add",controller.add);
-router.post("/edit/:id",controller.edit);
+router.post("/edit",controller.edit);
 router.post("/delete/:id",controller.delete);
 router.get("/getAll",controller.getAll);
 
