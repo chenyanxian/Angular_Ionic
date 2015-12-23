@@ -32,4 +32,5 @@ angular.module("ionicApp").service("userTool",function(){
     }
 
     return new usertool();
+
 })
