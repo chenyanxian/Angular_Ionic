@@ -25,7 +25,7 @@ var app 	= express();
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended:true}));
 
 var server = require('http').createServer(app);
 
