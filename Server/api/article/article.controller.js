@@ -91,7 +91,7 @@ exports.editArticleById = function(req,res){
             var article = new Article({title:title,createTime:createTime,content:content,category:parseInt(category),creater:creater,importantCount:parseInt(importantCount)});
             article.save(function(err,result){
                 if(err){
-                    return res.status(500).json({rc:false,data: err});
+                    return res.status(200).json({rc:false,data: err});
                 }
                 else{
                     return res.status(200).json({rc:true,data: result});
@@ -102,10 +102,9 @@ exports.editArticleById = function(req,res){
 }
 
 exports.deleteArticleById = function(req,res){
-    var defer = Q.defer();
     Article.remove({_id:req.body.id},function(err){
         if(err){
-            return res.status(500).json({rc:false,data: err});
+            return res.status(200).json({rc:false,data: err});
         } else{
             return res.status(200).json({rc:true,data: "删除成功!"});
         }
@@ -117,7 +116,7 @@ exports.delAllArticles = function(req,res){
     var ids = req.body.ids;
     Article.remove({_id:{$in:ids}},function(err){
         if(err){
-            return res.status(500).json({rc:false,data: err});
+            return res.status(200).json({rc:false,data: err});
         } else{
             return res.status(200).json({rc:true,data: "删除成功!"});
         }
