@@ -55,3 +55,6 @@ exports.getUser = function(req,res){
     })
 }
 
+exports.loginOut = function(req,res){
+    return res.status(200).json({rc:true,data:"登出成功!!"});
+}

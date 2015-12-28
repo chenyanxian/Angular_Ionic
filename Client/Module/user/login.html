@@ -1,37 +1,30 @@
 
 
-
-    <!--<div class="list">-->
-        <!--<label class="item item-input">-->
-            <!--<input type="text" placeholder="Login Name" />-->
-        <!--</label>-->
-
-        <!--<label class="item item-input" style="border-bottom:1px solid #ddd">-->
-            <!--<input type="text" placeholder="Login Password" />-->
-        <!--</label>-->
-
-        <!--<div style="text-align:center;">-->
-            <!--<button class="button button-outline button-positive">登录</button>-->
-            <!--<button class="button button-outline button-positive">注册</button>-->
-        <!--</div>-->
-    <!--</div>-->
-
     <div class="list">
         <div ng-show="showLogin">
-            <label class="item item-input item-stacked-label">
-                <span class="input-label">Login Name</span>
-                <input type="text" placeholder="Login Name" ng-model="loginName" />
-            </label>
-
-            <label class="item item-input item-stacked-label">
-                <span class="input-label">Login Password</span>
-                <input type="password" placeholder="Login Password" ng-model="loginPwd" />
-            </label>
-            <div style="text-align:center;margin-top:10px;">
-                <button class="button button-positive button-full" ng-click="doLogin()">登录</button>
-                <button class="button button-clear button-outline button-full" ng-click="goRegister()">去注册</button>
+            <div>
+                <ion-header-bar align-title="center" class="bar-positive">
+                    <div class="buttons">
+                        <button class="button" ng-click="goHot();">继续逛逛</button>
+                    </div>
+                </ion-header-bar>
             </div>
 
+            <div style="margin-top: 43px;">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Login Name</span>
+                    <input type="text" placeholder="Login Name" ng-model="loginName" />
+                </label>
+
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Login Password</span>
+                    <input type="password" placeholder="Login Password" ng-model="loginPwd" />
+                </label>
+                <div style="text-align:center;margin-top:10px;">
+                    <button class="button button-positive button-full" ng-click="doLogin()">登录</button>
+                    <button class="button button-clear button-outline button-full" ng-click="goRegister()">去注册</button>
+                </div>
+            </div>
     </div>
 
         <div ng-show="showRegister">
@@ -46,8 +39,8 @@
             </label>
 
             <label class="item item-input item-stacked-label">
-                <span class="input-label">Login NickName</span>
-                <input type="text" placeholder="Login Password" ng-model="regNiceName" />
+                <span class="input-label">NickName</span>
+                <input type="text" placeholder="NickName" ng-model="regNiceName" />
             </label>
 
             <div style="text-align:center;margin-top:10px;">

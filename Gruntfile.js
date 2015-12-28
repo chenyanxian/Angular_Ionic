@@ -40,7 +40,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-shell');
 
-    grunt.registerTask("runServer",['shell']);
+    grunt.registerTask("mongoodb",['shell']);
     grunt.registerTask("app.js",['nodemon:debug']);
 
 }

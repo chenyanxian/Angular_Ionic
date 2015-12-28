@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('ionicApp')
-    .controller('hotController', function ($scope,$stateParams,$state,$http,userTool) {
+    .controller('hotController', function ($scope,$stateParams,$state,$http,dataTool) {
 
         $scope.hotItems = [];
 
@@ -18,9 +18,9 @@ angular.module('ionicApp')
         }
 
         console.log($scope.hotItems)
-
-        var user = userTool.getUser();
-
-
-        console.log(user);
+        //
+        //var user = userTool.getUser();
+        //
+        //
+        //console.log(user);
     })

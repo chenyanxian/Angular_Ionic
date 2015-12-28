@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('ionicApp')
-    .controller('loginController', function ($scope,$stateParams,$state,$http,userTool,$ionicPopup) {
+    .controller('loginController', function ($scope,$stateParams,$state,$http,dataTool,$ionicPopup,jsCore) {
 
         $scope.showLogin = true;
         $scope.showRegister = false;
@@ -22,23 +22,23 @@ angular.module('ionicApp')
             fromState="tab.hot";
         }
 
+
         $scope.doLogin = function(){
             var name = $scope.loginName;
             var pwd = $scope.loginPwd;
 
             if(!name || !pwd){
-                var confirmPopup = $ionicPopup.alert({
-                    title: '登录提示',
-                    template: '用户名和密码不允许为空'
-                });
+                jsCore.showAlert("登录提示","用户名和密码不允许为空");
             }
             else{
                 $http.post("/api/users/login",{name:name,pwd:pwd}).success(function(data){
                   if(data.rc){
-                      //写入user tool
-                      userTool.setUser(data.data);
+                      //写入data cook
+                      dataTool.setUser(data.data);
 
                       $state.go(fromState);
+                  }else{
+                      jsCore.showAlert("登录提示","用户名或密码错误!");
                   }
                 })
             }
@@ -50,27 +50,19 @@ angular.module('ionicApp')
             var nickName = $scope.regNiceName;
 
             if(!name || !pwd || !nickName){
-                $ionicPopup.alert({
-                    title: '登录提示',
-                    template: '用户名,密码,昵称不允许为空!'
-                });
+                jsCore.showAlert("登录提示","用户名和密码,昵称不允许为空");
             }
             else{
                 $http.post("/api/users/register",{name:name,pwd:pwd,nickname:nickName}).success(function(data){
                     if(data.rc){
-                        var confirm = $ionicPopup.alert({
-                            title: '注册提示',
-                            template: '注册成功'
-                        });
-                        confirm.then(function(){
+                        jsCore.showAlert("注册提示","注册成功",function(){
                             $scope.showLogin = true;
                             $scope.showRegister = false;
+                            $scope.loginName = name;
+                            $scope.loginPwd = pwd;
                         })
                     }else{
-                        $ionicPopup.alert({
-                            title: '注册提示',
-                            template: data.data
-                        });
+                        jsCore.showAlert("注册提示",data.data);
                     }
                 })
             }
@@ -84,5 +76,9 @@ angular.module('ionicApp')
         $scope.goLogin = function(){
             $scope.showLogin = true;
             $scope.showRegister = false;
+        }
+
+        $scope.goHot = function(){
+            $state.go("tab.hot");
         }
     });
