@@ -21,14 +21,14 @@ exports.getAllArticles = function(req,res){
 function _getArticleById(id){
     var defer = Q.defer();
     if(id == ""){
-        defer.reject({rc:false,data:"参数有误,id为空."});
+        defer.resolve({rc:false,data:"参数有误,id为空."});
     }
     else{
         Article.find({_id:id},function(err,result){
             if(err){
-                defer.reject({rc:false,data:err});
+                defer.resolve({rc:false,data:err});
             }else if(result == null){
-                defer.reject({rc:false,data:"对象不存在!"});
+                defer.resolve({rc:false,data:"对象不存在!"});
             }
             else{
                 defer.resolve({rc:true,data:result});
@@ -58,9 +58,8 @@ exports.createArticle = function(req,res){
 
     if(title == "" || content == "" || category == "" || creater == ""){
         return res.status(200).json({rc:false,data: "标题,内容,类别,创建者不允许为空!"});
-    }
-    else{
-        var article = new Article({title:title,createTime:createTime,content:content,category:parseInt(category),creater:creater,importantCount:parseInt(importantCount)});
+    } else{
+        var article = new Article({title:title,createTime:createTime,content:content,category:category,creater:creater,importantCount:parseInt(importantCount)});
         article.save(function(err,result){
             if(err){
                 return res.status(200).json({rc:false,data: err});
@@ -70,55 +69,64 @@ exports.createArticle = function(req,res){
             }
         })
     }
-    return defer.promise;
 }
 
 exports.editArticleById = function(req,res){
-    var defer = Q.defer();
-    var promise = _getArticleById(req.body.id);
+    var entity = req.body.entity;
+    if(entity){
+        var title = entity.title;
+        var createTime = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
+        var content = entity.content;
+        var category = entity.category;
+        var creater = entity.creater;
+        var importantCount = entity.importantCount;
+        var tmp = {title:title,createTime:createTime,content:content,category:category,creater:creater,importantCount:parseInt(importantCount)};
 
-    promise.then(function(data){
-        if(data.rc == false){
-            return res.status(200).json({rc:false,data: data.data});
-        }else{
-            var title = req.body.title;
-            var createTime = req.body.createTime
-            var content = req.body.content;
-            var category = req.body.category;
-            var creater = req.body.creater;
-            var importantCount = req.body.importantCount;
-
-            var article = new Article({title:title,createTime:createTime,content:content,category:parseInt(category),creater:creater,importantCount:parseInt(importantCount)});
-            article.save(function(err,result){
-                if(err){
-                    return res.status(200).json({rc:false,data: err});
-                }
-                else{
-                    return res.status(200).json({rc:true,data: result});
-                }
-            })
-        }
-    })
+        Article.findByIdAndUpdate({_id:entity._id},tmp,function(err,article){
+            if(err){
+                return res.status(200).json({rc:false,data:err});
+            }else{
+                return res.status(200).json({rc:true,data:article});
+            }
+        });
+    }else{
+        return res.status(200).json({rc:false,data: "参数有误!"});
+    }
 }
 
 exports.deleteArticleById = function(req,res){
-    Article.remove({_id:req.body.id},function(err){
-        if(err){
-            return res.status(200).json({rc:false,data: err});
-        } else{
-            return res.status(200).json({rc:true,data: "删除成功!"});
-        }
-    })
+    var id = req.params.id;
+    if(id){
+        Article.remove({_id:id},function(err){
+            if(err){
+                return res.status(200).json({rc:false,data: err});
+            } else{
+                return res.status(200).json({rc:true,data: "删除成功!"});
+            }
+        })
+    }else{
+        return res.status(200).json({rc:false,data: "参数有误!"});
+    }
 }
 
-exports.delAllArticles = function(req,res){
-    var defer = Q.defer();
+exports.delArticlesByIds = function(req,res){
     var ids = req.body.ids;
+    console.log(ids);
     Article.remove({_id:{$in:ids}},function(err){
         if(err){
             return res.status(200).json({rc:false,data: err});
         } else{
-            return res.status(200).json({rc:true,data: "删除成功!"});
+            return res.status(200).json({rc:true,data: "批量删除成功!"});
+        }
+    })
+}
+
+exports.removeAllArticles = function(req,res){
+    Article.remove({},function(err){
+        if(err){
+            return res.status(200).json({rc:false,data: err});
+        } else{
+            return res.status(200).json({rc:true,data: "全部删除成功!"});
         }
     })
 }

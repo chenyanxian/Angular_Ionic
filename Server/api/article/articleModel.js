@@ -10,7 +10,7 @@ var userSchema = new Schema({
     title:String,
     createTime:String,
     content:String,
-    category:Number,
+    category:String,
     creater:String,
     importantCount:Number
 });

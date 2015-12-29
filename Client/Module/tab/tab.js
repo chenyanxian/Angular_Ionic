@@ -11,17 +11,19 @@ angular.module('ionicApp').config(function ($stateProvider) {
             templateUrl: 'Module/tab/tab.html',
             controller:"tabController"
         })
-        .state("tab.active",{
-            url:'/active',
+        .state("tab.mblog",{
+            url:'/mblog',
+            cache:false,
             views:{
-                "tab-active":{
-                    templateUrl:"Module/active/active.html",
-                    controller:"activeController"
+                "tab-mblog":{
+                    templateUrl:"Module/myblog/myblog.html",
+                    controller:"myblogController"
                 }
             }
         })
         .state("tab.hot",{
             url:'/hot',
+            cache:false,
             views:{
                 "tab-hot":{
                     templateUrl:"Module/hot/hot.html",
@@ -29,12 +31,13 @@ angular.module('ionicApp').config(function ($stateProvider) {
                 }
             }
         })
-        .state("tab.account",{
-            url:'/account',
+        .state("tab.my",{
+            url:'/my',
+            cache:false,
             views:{
-                "tab-account":{
-                    templateUrl:"Module/account/account.html",
-                    controller:"accountController"
+                "tab-my":{
+                    templateUrl:"Module/my/my.html",
+                    controller:"myController"
                 }
             }
         })
