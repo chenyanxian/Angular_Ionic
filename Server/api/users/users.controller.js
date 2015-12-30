@@ -22,7 +22,7 @@ exports.login = function(req,res){
 
 exports.register = function(req,res){
     var defer = Q.defer();
-    var user = new User({name:req.body.name,pwd:req.body.pwd,nickname:req.body.nickname});
+    var user = new User({name:req.body.name,pwd:req.body.pwd,nickname:req.body.nickname,ignore:"",focus:"",mine:""});
 
     User.find({name:req.body.name},function(err,result){
         if(err){
@@ -44,7 +44,7 @@ exports.register = function(req,res){
     })
 }
 
-exports.getUser = function(req,res){
+exports.getAllUsers = function(req,res){
     User.find({},function(err,users){
         if(err){
             return res.status(200).json({rc:false,data:err});

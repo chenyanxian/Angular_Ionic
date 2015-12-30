@@ -9,7 +9,7 @@ var controller = require('./article.controller');
 var router = express.Router();
 
 router.get("/getAllArticles",controller.getAllArticles);
-router.get("/getArticleById",controller.getArticleById);
+router.get("/getArticleById/:id",controller.getArticleById);
 router.post("/createArticle",controller.createArticle);
 router.post("/editArticleById",controller.editArticleById);
 router.post("/deleteArticleById/:id",controller.deleteArticleById);

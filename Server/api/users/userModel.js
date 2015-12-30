@@ -8,7 +8,10 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
     name:String,
     pwd:String,
-    nickname:String
+    nickname:String,
+    ignore:String,
+    focus:String,
+    mine:String
 });
 
 module.exports = mongoose.model('User',userSchema);

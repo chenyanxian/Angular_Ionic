@@ -9,19 +9,44 @@ angular.module('ionicApp')
 
         $scope.hotItems = [];
 
-        $http.get("/api/article/getAllArticles").success(function(d){
-            //console.log(d.data);
-        })
+        //check blog data is existed
+        var blogData = dataTool.getBlogs();
 
+        if(blogData){
+            $scope.hotItems = blogData;
+            console.log("data from cache");
+        }
+        else{
+            $http.get("/api/article/getAllArticles").success(function(d){
+                if(d.rc){
+                    $scope.hotItems = d.data;
+                    //设置数据缓存
+                    dataTool.setBlogData(d.data);
+                    console.log("data from server");
+                }else{
+                    console.log("error",d.data);
+                }
+            })
+        }
+
+        $scope.ignore = function(item){
+            console.log(item._id," ignore");
+        }
+
+        $scope.goDetail = function(item){
+            console.log(item._id," detail");
+
+            $state.go("blogdetail",{entity:item,id:item._id});
+        }
 
         //for(var i =0;i<5;i++){
-        //    var tmp = {title:"test"+i,content:"jjjjj",category:"js",creater:"abc"};
+        //    var tmp = {title:"test"+i,content:"how to design it???",code:"function a{return this;}",category:"js",creater:"abc"};
         //    $http.post("/api/article/createArticle",tmp).success(function(d){
-        //        console.log(d.data._id);
+        //
         //    })
         //}
 
-        //var tmp = {_id:"5682406a96dc11bd2ecdc5221",title:"test__new1",content:"jjjjj",category:"js",creater:"abc",importantCount:"98"};
+        //var tmp = {_id:"5682406a96dc11bd2ecdc5221",title:"test__new1",content:"jjjjj",code:"function a(){return this;}",category:"js",creater:"abc",followCount:"98"};
         //$http.post("/api/article/editArticleById",{entity:tmp}).success(function(d){
         //    console.log(d);
         //})
@@ -41,10 +66,7 @@ angular.module('ionicApp')
         //    console.log(d)
         //})
 
-        //
-        //for(var i=0;i<5;i++){
-        //    $scope.hotItems.push({title:'这是标题_'+i,createTime:'2015_10_'+i,content:'content_'+i,creater:'创作者_'+i,category:'这是作品类型_'+i})
-        //}
+
         //
         //
         //var user = dataTool.getUser();

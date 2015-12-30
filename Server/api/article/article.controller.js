@@ -52,14 +52,15 @@ exports.createArticle = function(req,res){
     var title = req.body.title;
     var createTime = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
     var content = req.body.content;
+    var code = req.body.code;
     var category = req.body.category;
     var creater = req.body.creater;
-    var importantCount = 0;
+    var followCount = 0;
 
     if(title == "" || content == "" || category == "" || creater == ""){
         return res.status(200).json({rc:false,data: "标题,内容,类别,创建者不允许为空!"});
     } else{
-        var article = new Article({title:title,createTime:createTime,content:content,category:category,creater:creater,importantCount:parseInt(importantCount)});
+        var article = new Article({title:title,createTime:createTime,content:content,code:code,category:category,creater:creater,followCount:parseInt(followCount)});
         article.save(function(err,result){
             if(err){
                 return res.status(200).json({rc:false,data: err});
@@ -77,10 +78,11 @@ exports.editArticleById = function(req,res){
         var title = entity.title;
         var createTime = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
         var content = entity.content;
+        var code = entity.code;
         var category = entity.category;
         var creater = entity.creater;
-        var importantCount = entity.importantCount;
-        var tmp = {title:title,createTime:createTime,content:content,category:category,creater:creater,importantCount:parseInt(importantCount)};
+        var followCount = entity.followCount;
+        var tmp = {title:title,createTime:createTime,content:content,category:category,code:code,creater:creater,followCount:parseInt(followCount)};
 
         Article.findByIdAndUpdate({_id:entity._id},tmp,function(err,article){
             if(err){

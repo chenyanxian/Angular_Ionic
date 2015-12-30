@@ -47,7 +47,11 @@ angular.module("ionicApp").service("dataTool",function(){
         }
 
         this.getBlogs = function(){
-            return getItemByKey(map.blog,this.data);
+            var data = getItemByKey(map.blog,this.data);
+            if(data){
+                return JSON.parse(data);
+            }
+            return data;
         }
 
         this.setCategory = function(data){

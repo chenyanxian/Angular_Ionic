@@ -20,24 +20,38 @@
 </ion-header-bar>
 
 
+
 <ion-content>
+    <!--<div>-->
+        <!--<h3>javascript</h3>-->
+    <!--<pre>-->
+    <!--<code class="hljs">-->
+        <!--var test = "abc";-->
+        <!--function a(){-->
+            <!--this.name = "a";-->
+            <!--alert("test");-->
+        <!--}-->
+    <!--</code>-->
+    <!--</pre>-->
+    <!--</div>-->
     <ion-list>
         <ion-item ng-repeat="item in hotItems" class="item-remove-animate">
-            <div>
-                <span style="float: left;font-weight: bold">{{item.title}}</span>
-                <span style="float: right">{{item.category}}</span>
-                <div style="clear: both"></div>
+            <div ng-click="goDetail(item);">
+                <div>
+                    <span style="float: left;font-weight: bold">{{item.title}}</span>
+                    <span style="float: right">{{item.category}}</span>
+                    <div style="clear: both"></div>
+                </div>
+
+                <div style="font-size: 80%">
+                    <span style="float: left">{{item.creater}}</span>
+                    <span style="float: right">{{item.createTime}}</span>
+                    <div style="clear: both"></div>
+                </div>
             </div>
 
-            <div style="font-size: 80%">
-                <span style="float: left">{{item.creater}}</span>
-                <span style="float: right">{{item.createTime}}</span>
-                <div style="clear: both"></div>
-            </div>
-
-
-            <ion-option-button class="button-assertive" ng-click="delItem(item);">
-                Delete
+            <ion-option-button class="button-assertive" ng-click="ignore(item);">
+                忽略
             </ion-option-button>
         </ion-item>
     </ion-list>
