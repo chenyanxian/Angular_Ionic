@@ -4,7 +4,7 @@
 
 
 var Article = require('./articleModel');
-
+var core = require('../../components/coreMethods.js');
 var Q = require("q");
 
 exports.getAllArticles = function(req,res){
@@ -53,6 +53,7 @@ exports.createArticle = function(req,res){
     var createTime = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
     var content = req.body.content;
     var code = req.body.code;
+    var smallTitle = req.body.smallTitle;
     var category = req.body.category;
     var creater = req.body.creater;
     var followCount = 0;
@@ -60,13 +61,18 @@ exports.createArticle = function(req,res){
     if(title == "" || content == "" || category == "" || creater == ""){
         return res.status(200).json({rc:false,data: "标题,内容,类别,创建者不允许为空!"});
     } else{
-        var article = new Article({title:title,createTime:createTime,content:content,code:code,category:category,creater:creater,followCount:parseInt(followCount)});
+        var article = new Article({title:title,createTime:createTime,content:content,code:code,smallTitle:smallTitle,category:category,creater:creater,followCount:parseInt(followCount)});
         article.save(function(err,result){
             if(err){
                 return res.status(200).json({rc:false,data: err});
             }
             else{
-                return res.status(200).json({rc:true,data: result});
+
+                var promise = core.updateMyblogStatus(creater,result._id);
+
+                promise.then(function(d){
+                    return res.status(200).json({rc: d.rc,data: d.data});
+                })
             }
         })
     }
@@ -79,10 +85,11 @@ exports.editArticleById = function(req,res){
         var createTime = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
         var content = entity.content;
         var code = entity.code;
+        var smallTitle = req.body.smallTitle;
         var category = entity.category;
         var creater = entity.creater;
         var followCount = entity.followCount;
-        var tmp = {title:title,createTime:createTime,content:content,category:category,code:code,creater:creater,followCount:parseInt(followCount)};
+        var tmp = {title:title,createTime:createTime,content:content,category:category,code:code,smallTitle:smallTitle,creater:creater,followCount:parseInt(followCount)};
 
         Article.findByIdAndUpdate({_id:entity._id},tmp,function(err,article){
             if(err){

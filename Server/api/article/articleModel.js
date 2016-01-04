@@ -9,8 +9,9 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
     title:String,
     createTime:String,
-    content:String,
-    code:String,
+    smallTitle:Array,
+    content:Array,
+    code:Array,
     category:String,
     creater:String,
     followCount:Number

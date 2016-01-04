@@ -29,22 +29,25 @@ angular.module('ionicApp')
             })
         }
 
-        $scope.ignore = function(item){
-            console.log(item._id," ignore");
+
+
+
+        $scope.createBlog = function(){
+
+            var user = dataTool.getUser();
+
+            if(!user){
+                $state.go("login",{entity:"tab.my"});
+            }
+            else{
+                for(var i =0;i<1;i++){
+                    var tmp = {title:"test"+i,smallTitle:["js-------"+i],content:["how to design it???"+i],code:["function a(){return this;}"],category:"js",creater:user.name};
+                    $http.post("/api/article/createArticle",tmp).success(function(d){
+
+                    })
+                }
+            }
         }
-
-        $scope.goDetail = function(item){
-            console.log(item._id," detail");
-
-            $state.go("blogdetail",{entity:item,id:item._id});
-        }
-
-        //for(var i =0;i<5;i++){
-        //    var tmp = {title:"test"+i,content:"how to design it???",code:"function a{return this;}",category:"js",creater:"abc"};
-        //    $http.post("/api/article/createArticle",tmp).success(function(d){
-        //
-        //    })
-        //}
 
         //var tmp = {_id:"5682406a96dc11bd2ecdc5221",title:"test__new1",content:"jjjjj",code:"function a(){return this;}",category:"js",creater:"abc",followCount:"98"};
         //$http.post("/api/article/editArticleById",{entity:tmp}).success(function(d){
