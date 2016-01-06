@@ -1,4 +1,30 @@
 
+<div style="margin-top: 57px;">
+    <ion-header-bar align-title="center" class="bar-positive">
+        <h1 class="title">我的</h1>
+    </ion-header-bar>
+</div>
+<div>
+    <ion-list>
+        <ion-item>
+            <span>Name:</span>
+            <span>{{user.name}}</span>
+            <img class="rightArrow" src="../../resource/images/rightArrow.png" />
+        </ion-item>
+        <ion-item>
+            <span>Nick Name:</span>
+            <span>{{user.nickname}}</span>
+            <img class="rightArrow" src="../../resource/images/rightArrow.png" />
+        </ion-item>
+    </ion-list>
+
+    <ion-list class="my_bloginfo">
+        <ion-item ng-repeat="item in items">
+            <span>{{item.name}}</span>
+            <img ng-show="item.show" class="rightArrow" src="../../resource/images/rightArrow.png" />
+        </ion-item>
+    </ion-list>
+</div>
 
 <div class="list">
     <button class="button button-full button-positive red" ng-click="loginOut();">注销</button>

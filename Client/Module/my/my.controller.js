@@ -14,6 +14,13 @@ angular.module('ionicApp')
             $state.go("login",{entity:"tab.my"});
         }
 
+        $scope.items = [
+            {name:"我的blog",show:true},
+            {name:"我关注的blog",show:true},
+            {name:"忽略的blog",show:true},
+            {name:"清理缓存数据",show:false}]
+
+        $scope.user = user;
 
         $scope.loginOut = function(){
             $http.post('/api/users/loginOut').success(function(d){

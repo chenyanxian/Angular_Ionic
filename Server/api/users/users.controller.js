@@ -15,7 +15,9 @@ exports.login = function(req,res){
             return res.status(200).json({rc:false,data:err});
         }
         else{
-            return res.status(200).json({rc:true,data:{name:result[0].name,nickname:result[0].nickname}});
+            var u = result[0];
+            var tmp = {name:u.name,nickname:u.nickname,focus: u.focus,ignore: u.ignore, mine: u.mine};
+            return res.status(200).json({rc:true,data:tmp});
         }
     })
 }
@@ -157,6 +159,25 @@ exports.deleteMyblog = function(req,res){
             return res.status(200).json({rc:false,data: d.data});
         }
     })
+}
+
+exports.getUserBlogs = function(req,res){
+    var name = req.params.name;
+
+    var promise = core.findUserByName(name);
+    promise.then(function(d){
+        if(d.rc){
+            if(d.data.length != 0){
+                var u = d.data[0];
+                res.status(200).json({rc:true,data:{focus: u.focus,ignore: u.ignore, mine: u.mine}});
+            }else{
+                res.status(200).json({rc:false,data: "用户异常!"});
+            }
+        }else{
+            res.status(200).json({rc:false,data: d.data});
+        }
+    })
+
 }
 
 exports.loginOut = function(req,res){

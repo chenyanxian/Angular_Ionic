@@ -7,3 +7,17 @@
 .blogFocusColor{
     background-color: #65624C !important;
 }
+
+.clear{
+    clear: both;
+}
+
+.my_bloginfo .list{
+    margin-top: -2px;
+}
+
+.rightArrow{
+    width: 18px;
+    position: absolute;
+    right: 4px;
+}

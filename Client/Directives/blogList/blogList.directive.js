@@ -70,6 +70,10 @@ angular.module("ionicApp").directive("blogList",function(){
 
             }
 
+            $scope.doRefresh = function(){
+                var item = $scope.blogData[0];
+                $scope.blogData.push(item);
+            }
         }
     }
 })
