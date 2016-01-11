@@ -177,7 +177,32 @@ exports.getUserBlogs = function(req,res){
             res.status(200).json({rc:false,data: d.data});
         }
     })
+}
 
+exports.updateNickName = function(req,res){
+    var name = req.body.name;
+    var nickName = req.body.nickName;
+    var promise = core.findUserByName(name);
+    promise.then(function(d){
+        if(d.rc){
+            if(d.data.length != 0){
+
+                User.findByIdAndUpdate({_id:d.data[0]._id},{nickname:nickName},function(err,result){
+                    if(err){
+                        return res.status(200).json({rc:false,data:err});
+                    }
+                    else{
+                        return res.status(200).json({rc:true,data:"Success!"});
+                    }
+                })
+
+            }else{
+                res.status(200).json({rc:false,data: "用户异常!"});
+            }
+        }else{
+            res.status(200).json({rc:false,data: d.data});
+        }
+    })
 }
 
 exports.loginOut = function(req,res){

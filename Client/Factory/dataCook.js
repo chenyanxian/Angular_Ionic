@@ -87,7 +87,11 @@ angular.module("ionicApp").service("dataTool",function(){
         }
 
         this.getUserBlogs = function(){
-            return getItemByKey(map.userBlog,this.data);
+            var d = getItemByKey(map.userBlog,this.data);
+            if(d == null){
+                d = {focus:[],ignore:[],mine:[]};
+            }
+            return d;
         }
 
         this.setCategory = function(data){
@@ -113,7 +117,10 @@ angular.module("ionicApp").service("dataTool",function(){
             if(!res.tag){
                 this.data.push(data);
             }
+        }
 
+        this.clearCacheData = function(){
+            this.data.length = 0;
         }
     }
 

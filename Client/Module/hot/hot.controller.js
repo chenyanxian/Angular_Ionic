@@ -5,11 +5,16 @@
 'use strict';
 
 angular.module('ionicApp')
-    .controller('hotController', function ($scope,$stateParams,$state,$http,dataTool,jsCore,$q) {
+    .controller('hotController', function ($scope,$rootScope,$stateParams,$state,$http,dataTool,jsCore,$q) {
 
         $scope.hotItems = [];
+        $scope.showMeTag = true;
+        $scope.showAllTag = false;
+
+        $scope.showFocus = {show:true};
+        $scope.showUnFocus = {show:true};
+
         jsCore.showLoading();
-        var user = dataTool.getUser();
 
         var blogDataPromise = null;
 
@@ -38,31 +43,32 @@ angular.module('ionicApp')
         }
 
         $scope.showMe = function(){
-            if(!user){
-                $state.go("login",{entity:"tab.hot"});
-            }
-            else{
-                var userBlog = dataTool.getUserBlogs();
-                if(userBlog!=null){
-                    $scope.hotItems = userBlog.mine;
-                    console.log("userBlog data from cache");
-                }else{
-                    var userBolgPromise = jsCore.getDataByUrl("/api/users/getUserBlogs/"+user.name);
-                    $q.all([blogDataPromise,userBolgPromise]).then(function(d){
-                        var _d = d[1].data;
-                        if(_d.rc){
-                            dataTool.setUserBlogs(_d.data);
-                            $scope.hotItems = dataTool.getUserBlogs().mine;
-                            console.log("userBlog data from cache");
-                        }
-                    })
-                }
-            }
+
+            var user = jsCore.checkIsLogin("tab.hot");
+            if(!user) return;
+
+            //在登录的时候已经设置了缓存数据
+            var userBlog = dataTool.getUserBlogs();
+            $scope.hotItems = userBlog.mine;
+            console.log("userBlog data from cache");
+
+            $rootScope.$broadcast("changeButtonState",{focus:{show:false},unfocus:{show:false}});
+
+            $scope.showMeTag = false;
+            $scope.showAllTag = true;
+        }
+
+        $scope.showAll = function(){
+            $scope.hotItems = blogData;
+            $scope.showMeTag = true;
+            $scope.showAllTag = false;
+
+            $rootScope.$broadcast("changeButtonState",{focus:{show:true},unfocus:{show:true}});
         }
 
 
-        //for(var i =0;i<1;i++){
-        //    var tmp = {title:"test"+i,smallTitle:["js-------"+i],content:["how to design it???"+i],code:["function a(){return this;}"],category:"js",creater:user.name};
+        //for(var i = 1;i<6;i++){
+        //    var tmp = {title:"CSS_temp_article"+i,smallTitle:["CSS-------"+i],content:["how to design it???"+i],code:["{margin-top:30px}"],category:"js",creater:"aaa"};
         //    $http.post("/api/article/createArticle",tmp).success(function(d){
         //
         //    })

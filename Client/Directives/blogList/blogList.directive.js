@@ -10,18 +10,18 @@ angular.module("ionicApp").directive("blogList",function(){
         restrict:'EA',
         scope:{
             blogData:"=",
-            showDel:"@",
-            showIgnore:"@",
-            showFocus:"@"
+            showUnFocus:"=",
+            showIgnore:"=",
+            showFocus:"="
         },
         link:function($scope,element,attrs){},
-        controller:function($scope,dataTool,$http,$state,jsCore){
+        controller:function($scope,$rootScope,dataTool,$http,$state,jsCore){
 
             var user = dataTool.getUser();
 
-            $scope.showDel == undefined?$scope.showDel=false:$scope.showDel=true;
-            $scope.showIgnore == undefined?$scope.showIgnore=false:$scope.showIgnore=true;
-            $scope.showFocus == undefined?$scope.showFocus=false:$scope.showFocus=true;
+            $scope.showIgnore == undefined?$scope.Ignore = false:$scope.Ignore = $scope.showIgnore.show;
+            $scope.showUnFocus == undefined?$scope.UnFocus = false:$scope.UnFocus = $scope.showUnFocus.show;
+            $scope.showFocus == undefined?$scope.Focus = false:$scope.Focus = $scope.showFocus.show;
 
             $scope.goDetail = function(item){
                 $state.go("blogdetail",{entity:item,id:item._id});
@@ -38,6 +38,11 @@ angular.module("ionicApp").directive("blogList",function(){
             $scope.unFocusItem = function(item){
                 updateMyArticleStates("unIgnore",item);
             }
+
+            $rootScope.$on("changeButtonState",function(e,d){
+                $scope.Focus = d.focus.show;
+                $scope.UnFocus = d.unfocus.show;
+            });
 
             function updateMyArticleStates(tag,item){
 

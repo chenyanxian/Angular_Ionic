@@ -9,9 +9,8 @@
         <ion-item>
             <span>Name:</span>
             <span>{{user.name}}</span>
-            <img class="rightArrow" src="../../resource/images/rightArrow.png" />
         </ion-item>
-        <ion-item>
+        <ion-item ng-click="changeNickName(user.nickname);">
             <span>Nick Name:</span>
             <span>{{user.nickname}}</span>
             <img class="rightArrow" src="../../resource/images/rightArrow.png" />
@@ -19,7 +18,7 @@
     </ion-list>
 
     <ion-list class="my_bloginfo">
-        <ion-item ng-repeat="item in items">
+        <ion-item ng-repeat="item in items" ng-click="goList(item);">
             <span>{{item.name}}</span>
             <img ng-show="item.show" class="rightArrow" src="../../resource/images/rightArrow.png" />
         </ion-item>

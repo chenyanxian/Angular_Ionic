@@ -15,5 +15,6 @@ router.post('/myBlog',controller.myBlog);
 router.post('/deleteMyblog',controller.deleteMyblog);
 router.post('/unFocusBlog',controller.unFocusBlog);
 router.get('/getUserBlogs/:name',controller.getUserBlogs);
+router.post('/updateNickName',controller.updateNickName);
 
 module.exports = router;

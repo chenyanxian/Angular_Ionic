@@ -36,21 +36,24 @@ angular.module('ionicApp')
                       //写入data cache
                       dataTool.setUser(data.data);
 
-                      //设置用户blog信息
+                      //设置用户blog信息----极少情况出现，除非用户手动在浏览器里面输入登录地址才会触发此方法
                       var bl = dataTool.setUserBlogs(data.data);
                       if(bl==false){
                           var blogDataPromise = jsCore.getDataByUrl("/api/article/getAllArticles");
                           blogDataPromise.then(function(d){
                               d = d.data;
                               if(d.rc){
+                                  console.log("get all articles from login method!!!I don't want to see this message!!");
                                   dataTool.setAllBlogData(d.data);
                                   dataTool.setUserBlogs(data.data);
                               }else{
                                   console.log("error",d.data);
                               }
+                              $state.go(fromState);
                           })
+                      }else{
+                          $state.go(fromState);
                       }
-                      $state.go(fromState);
                   }else{
                       jsCore.showAlert("登录提示","用户名或密码错误!");
                   }
