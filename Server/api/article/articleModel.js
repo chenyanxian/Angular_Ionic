@@ -9,10 +9,12 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
     title:String,
     createTime:String,
-    content:String,
+    smallTitle:Array,
+    content:Array,
+    code:Array,
     category:String,
     creater:String,
-    importantCount:Number
+    followCount:Number
 });
 
 module.exports = mongoose.model('Article',userSchema);

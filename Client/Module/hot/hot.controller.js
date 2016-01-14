@@ -5,23 +5,76 @@
 'use strict';
 
 angular.module('ionicApp')
-    .controller('hotController', function ($scope,$stateParams,$state,$http,dataTool) {
+    .controller('hotController', function ($scope,$rootScope,$stateParams,$state,$http,dataTool,jsCore,$q) {
 
         $scope.hotItems = [];
+        $scope.showMeTag = true;
+        $scope.showAllTag = false;
 
-        $http.get("/api/article/getAllArticles").success(function(d){
-            //console.log(d.data);
-        })
+        $scope.showFocus = {show:true};
+        $scope.showUnFocus = {show:true};
+
+        jsCore.showLoading();
+
+        var blogDataPromise = null;
+
+        //check blog data is existed
+        var blogData = dataTool.getAllBlogs();
+
+        if(blogData != null){
+            $scope.hotItems = blogData;
+            jsCore.hideLoading();
+            console.log("blogData data from cache");
+        } else{
+            //这里的请求必须写在没有缓存的条件下，否则会造成多次请求
+            blogDataPromise = jsCore.getDataByUrl("/api/article/getAllArticles");
+            blogDataPromise.then(function(d){
+                d = d.data;
+                if(d.rc){
+                    $scope.hotItems = d.data;
+                    //设置数据缓存
+                    dataTool.setAllBlogData(d.data);
+                    jsCore.hideLoading();
+                    console.log("blogData from server");
+                }else{
+                    console.log("error",d.data);
+                }
+            })
+        }
+
+        $scope.showMe = function(){
+
+            var user = jsCore.checkIsLogin("tab.hot");
+            if(!user) return;
+
+            //在登录的时候已经设置了缓存数据
+            var userBlog = dataTool.getUserBlogs();
+            $scope.hotItems = userBlog.mine;
+            console.log("userBlog data from cache");
+
+            $rootScope.$broadcast("changeButtonState",{focus:{show:false},unfocus:{show:false}});
+
+            $scope.showMeTag = false;
+            $scope.showAllTag = true;
+        }
+
+        $scope.showAll = function(){
+            $scope.hotItems = blogData;
+            $scope.showMeTag = true;
+            $scope.showAllTag = false;
+
+            $rootScope.$broadcast("changeButtonState",{focus:{show:true},unfocus:{show:true}});
+        }
 
 
-        //for(var i =0;i<5;i++){
-        //    var tmp = {title:"test"+i,content:"jjjjj",category:"js",creater:"abc"};
+        //for(var i = 1;i<6;i++){
+        //    var tmp = {title:"CSS_temp_article"+i,smallTitle:["CSS-------"+i],content:["how to design it???"+i],code:["{margin-top:30px}"],category:"js",creater:"aaa"};
         //    $http.post("/api/article/createArticle",tmp).success(function(d){
-        //        console.log(d.data._id);
+        //
         //    })
         //}
 
-        //var tmp = {_id:"5682406a96dc11bd2ecdc5221",title:"test__new1",content:"jjjjj",category:"js",creater:"abc",importantCount:"98"};
+        //var tmp = {_id:"5682406a96dc11bd2ecdc5221",title:"test__new1",content:"jjjjj",code:"function a(){return this;}",category:"js",creater:"abc",followCount:"98"};
         //$http.post("/api/article/editArticleById",{entity:tmp}).success(function(d){
         //    console.log(d);
         //})
@@ -40,15 +93,5 @@ angular.module('ionicApp')
         //$http.post("/api/article/removeAllArticles").success(function(d){
         //    console.log(d)
         //})
-
-        //
-        //for(var i=0;i<5;i++){
-        //    $scope.hotItems.push({title:'这是标题_'+i,createTime:'2015_10_'+i,content:'content_'+i,creater:'创作者_'+i,category:'这是作品类型_'+i})
-        //}
-        //
-        //
-        //var user = dataTool.getUser();
-        //
-        //console.log(user);
 
     })

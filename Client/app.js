@@ -12,6 +12,6 @@ angular.module('ionicApp',['ionic'])
 
         $urlRouterProvider.otherwise('/tab');
 
-        $locationProvider.html5Mode(true);
+        //$locationProvider.html5Mode(true);
 
     });

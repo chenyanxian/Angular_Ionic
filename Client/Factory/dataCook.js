@@ -10,7 +10,8 @@ angular.module("ionicApp").service("dataTool",function(){
     var map = {
         user:"user",
         blog:"blog",
-        category:"category"
+        category:"category",
+        userBlog:"userBlog"
     }
 
     function getItemByKey(key,data){
@@ -41,13 +42,56 @@ angular.module("ionicApp").service("dataTool",function(){
         }
 
         //保留原数据不会被污染,因此存的是字符串值类型,而不是对象引用类型
-        this.setBlogData = function(data){
+        this.setAllBlogData = function(data){
             var tmp = {key:map.blog,data:JSON.stringify(data)};
             this.overWrite(map.blog,tmp);
         }
 
-        this.getBlogs = function(){
-            return getItemByKey(map.blog,this.data);
+        this.getAllBlogs = function(){
+            var data = getItemByKey(map.blog,this.data);
+            if(data){
+                return JSON.parse(data);
+            }
+            return data;
+        }
+
+        function getItemsFromDataByKey(ids,data,filed){
+            var _tmp = ids[filed];
+            var res = [];
+            for(var i =0;i<_tmp.length;i++){
+                for(var j=0;j<data.length;j++){
+                    if(_tmp[i] == data[j]._id){
+                        res.push(data[j]);
+                        break;
+                    }
+                }
+            }
+            return res;
+        }
+
+        this.setUserBlogs = function(ids){
+
+            var _d = {key:map.userBlog,data:{focus:[],ignore:[],mine:[]}};
+            var allBlog = this.getAllBlogs();
+            if(allBlog == null){
+                return false;
+            }
+
+            _d.data.focus = getItemsFromDataByKey(ids,allBlog,"focus");
+            _d.data.ignore = getItemsFromDataByKey(ids,allBlog,"ignore");
+            _d.data.mine = getItemsFromDataByKey(ids,allBlog,"mine");
+
+            this.overWrite(map.userBlog,_d);
+
+            return true;
+        }
+
+        this.getUserBlogs = function(){
+            var d = getItemByKey(map.userBlog,this.data);
+            if(d == null){
+                d = {focus:[],ignore:[],mine:[]};
+            }
+            return d;
         }
 
         this.setCategory = function(data){
@@ -73,7 +117,10 @@ angular.module("ionicApp").service("dataTool",function(){
             if(!res.tag){
                 this.data.push(data);
             }
+        }
 
+        this.clearCacheData = function(){
+            this.data.length = 0;
         }
     }
 

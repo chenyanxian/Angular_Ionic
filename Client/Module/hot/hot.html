@@ -4,9 +4,10 @@
     <!--<div class="buttons">-->
         <!--<button class="button">删除</button>-->
     <!--</div>-->
-    <h1 class="title">热门列表</h1>
+    <h1 class="title">热门Article</h1>
     <div class="buttons">
-        <button class="button">只看我的</button>
+        <button class="button" ng-show="showMeTag" ng-click="showMe();">只看我的</button>
+        <button class="button" ng-show="showAllTag" ng-click="showAll();">取消只看我的</button>
     </div>
 
     <!--<label class="item item-input item-select">-->
@@ -19,26 +20,6 @@
     <!--</label>-->
 </ion-header-bar>
 
-
 <ion-content>
-    <ion-list>
-        <ion-item ng-repeat="item in hotItems" class="item-remove-animate">
-            <div>
-                <span style="float: left;font-weight: bold">{{item.title}}</span>
-                <span style="float: right">{{item.category}}</span>
-                <div style="clear: both"></div>
-            </div>
-
-            <div style="font-size: 80%">
-                <span style="float: left">{{item.creater}}</span>
-                <span style="float: right">{{item.createTime}}</span>
-                <div style="clear: both"></div>
-            </div>
-
-
-            <ion-option-button class="button-assertive" ng-click="delItem(item);">
-                Delete
-            </ion-option-button>
-        </ion-item>
-    </ion-list>
+    <blog-list blog-data="hotItems" show-un-focus="showUnFocus" show-focus="showFocus"></blog-list>
 </ion-content>
